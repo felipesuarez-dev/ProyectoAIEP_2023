@@ -14,11 +14,13 @@ namespace Servicios
     {
         private SqlConnection connection;
         private readonly RegistrarEventosService _registrarEventosService;
+        private readonly UsuarioService _usuarioService;
 
         public IniciarSesionService(SqlConnection connection)
         {
             this.connection = connection;
             _registrarEventosService = new RegistrarEventosService(connection);
+            _usuarioService = new UsuarioService(connection);
         }
 
         public class ValidationResult
@@ -57,7 +59,7 @@ namespace Servicios
                         int idEstado = Convert.ToInt32(reader["id_estado"]);
                         bool isActive = reader.GetBoolean(reader.GetOrdinal("bol_activo"));
 
-                        var passDesencriptada = DesEncriptar(storedPassword);
+                        var passDesencriptada = _usuarioService.DesEncriptarContraseña(storedPassword);
 
                         result.IsSuccessful = false;
                         result.IsBlocked = false;
@@ -151,25 +153,7 @@ namespace Servicios
 
         //    return Convert.ToBase64String(hash);
         //}
-
-        /// Encripta una cadena
-        public string Encriptar(string _cadenaAencriptar)
-        {
-            string result = string.Empty;
-            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
-            result = Convert.ToBase64String(encryted);
-            return result;
-        }
-
-        /// Esta función desencripta la cadena que le envíamos en el parámentro de entrada.
-        public string DesEncriptar(string _cadenaAdesencriptar)
-        {
-            string result = string.Empty;
-            byte[] decryted = Convert.FromBase64String(_cadenaAdesencriptar);
-            //result = System.Text.Encoding.Unicode.GetString(decryted, 0, decryted.ToArray().Length);
-            result = System.Text.Encoding.Unicode.GetString(decryted);
-            return result;
-        }
+        
     }
 }
 

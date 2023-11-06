@@ -27,27 +27,27 @@ namespace Presentacion
             _iniciarSesionService = new IniciarSesionService(db.ObtenerConexion());
             _registrarEventosService = new RegistrarEventosService(db.ObtenerConexion());
             _usuarioService = new UsuarioService(db.ObtenerConexion());
-            //var clave = _iniciarSesionService.Encriptar("123456");
+            //var claveEncriptada = _usuarioService.EncriptarContraseña("123456");
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
             try
             {
-                Usuario user = null;
-                var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text); //método para validar al usuario ingresado
-                if (resultado.IsSuccessful || resultado.IsBlocked || resultado.IsExist)
-                {
-                    user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
-                }
-
                 //mensajes
-                var mensajeExito =  "Inicio de sesión exitoso.";
+                var mensajeExito = "Inicio de sesión exitoso.";
                 var mensajeBloqueado = " Su cuenta fue bloqueada. Comuníquese con el soporte.";
                 var mensajeFallido = "Nombre de usuario o contraseña incorrectos. ";
                 var mjeIntentosFallido = "\n\nNúmero de intentos fallidos: ";
                 var mjeContraseñaIncorrecta = "Contraseña Incorrecta. ";
                 var advertenciaBloqueo = "\n\nEl próximo intento fallido bloqueará la cuenta.";
+
+                Usuario user = null;
+                var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text); //método para validar al usuario ingresado
+                if (resultado.IsSuccessful || resultado.IsBlocked || resultado.IsExist)
+                {
+                    user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD si alguno de los resultados es true
+                }
 
                 //Manejo de inicio de sesión según resultado de la validación
                 if (resultado.IsSuccessful)
