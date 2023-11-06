@@ -195,7 +195,7 @@ namespace Dominio
             {
                 // Consulta para verificar las credenciales y el estado del usuario
                 // Consulta para actualizar los datos del usuario
-                string selectQuery = "SELECT pass_user, intentos_fallidos, id_estado FROM Usuarios WHERE username = @username AND pass_user = @pass_user";
+                string selectQuery = "SELECT pass_user, intentos_fallidos, id_estado FROM Usuarios WHERE username = @username";
                 string updateQuery = "UPDATE usuarios SET intentos_fallidos = @intentos_fallidos, id_estado = @id_estado WHERE username = @username";
 
                 using (SqlCommand comando = new SqlCommand(selectQuery, connection))
@@ -220,6 +220,7 @@ namespace Dominio
 
                         if (idEstado == 2) // 2 es el estado para "Bloqueado"
                         {
+                            connection.Close();
                             result.IsBlocked = true; // Usuario bloqueado
                         }
                         else if (password == storedPassword)
@@ -242,30 +243,41 @@ namespace Dominio
                                 actualizarComando.Parameters.AddWithValue("@bol_activo", true);
                                 actualizarComando.ExecuteNonQuery();
                             }
+
+                            connection.Close();
                             result.IsSuccessful = true;
                         }
                         else
                         {
+                            if (connection.State == ConnectionState.Open)
+                            {
+                                connection.Close();
+                            }
                             intentosFallidos++;
 
                             // Verificar si se superó el límite de intentos fallidos
                             if (intentosFallidos >= 3)
                             {
                                 // Bloquear la cuenta
+                                result.IsBlocked = true;
                                 idEstado = 2; // Cambia el estado a "Bloqueado"
                             }
 
-                            // Actualizar los intentos fallidos e IdEstado en la base de datos
-                            //using (SqlCommand actualizarComando = new SqlCommand(updateQuery, connection))
-                            //{
-                            //    actualizarComando.Parameters.AddWithValue("@intentos_fallidos", intentosFallidos);
-                            //    actualizarComando.Parameters.AddWithValue("@id_estado", idEstado);
-                            //    actualizarComando.Parameters.AddWithValue("@username", username);
-                            //    actualizarComando.Parameters.AddWithValue("@bol_activo", true);
-                            //    actualizarComando.ExecuteNonQuery();
-                            //}
+                            //Actualizar los intentos fallidos e IdEstado en la base de datos
+                            using (SqlCommand actualizarComando = new SqlCommand(updateQuery, connection))
+                            {
+                                if (connection.State != ConnectionState.Open)
+                                {
+                                    connection.Open();
+                                }
+                                actualizarComando.Parameters.AddWithValue("@intentos_fallidos", intentosFallidos);
+                                actualizarComando.Parameters.AddWithValue("@id_estado", idEstado);
+                                actualizarComando.Parameters.AddWithValue("@username", username);
+                                actualizarComando.Parameters.AddWithValue("@bol_activo", true);
+                                actualizarComando.ExecuteNonQuery();
+                            }
 
-                            result.IsBlocked = true;
+                            connection.Close();
                         }
                     }
                     else
@@ -273,6 +285,7 @@ namespace Dominio
                         result.IsSuccessful = false;
                     }
 
+                    connection.Close();
                     return result; // Devuelve el resultado
                 }
             }

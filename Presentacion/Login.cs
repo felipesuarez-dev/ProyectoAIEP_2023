@@ -32,7 +32,7 @@ namespace Presentacion
             if (resultado.IsSuccessful == true)
             {
                 MessageBox.Show("Inicio de sesión exitoso.");
-                // aqui el código para abrir la ventanda que viene después del inciiar sesion
+                // TODO: arreglar abrir siguiente ventana
                 Index indexForm = new Index();
                 indexForm.Show();
                 this.Close();
@@ -40,10 +40,14 @@ namespace Presentacion
             if (resultado.IsBlocked == true)
             {
                 MessageBox.Show("La cuenta está bloqueada. Comuníquese con el soporte.");
+                txtUser.Text = "";
+                txtPass.Text = "";
             }
-            if (resultado.IsSuccessful == false)
+            if (resultado.IsSuccessful == false && resultado.IsBlocked == false)
             {
-                MessageBox.Show("Nombre de usuario o contraseña incorrectos.");                
+                MessageBox.Show("Nombre de usuario o contraseña incorrectos.");
+                txtUser.Text = "";
+                txtPass.Text = "";
             }
         }
 
