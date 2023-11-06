@@ -14,18 +14,37 @@ namespace Presentacion
 {
     public partial class Login : Form
     {
-        private Db db;
+        private readonly Db db;
+        private readonly IniciarSesion login;
 
         public Login()
         {
             InitializeComponent();
+            db = new Db();
+            login = new IniciarSesion(db.ObtenerConexion());
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
-            IniciarSesion login = new IniciarSesion(db.GetConnection());
+            var resultado = login.Validacion(txtUser.Text, txtPass.Text);
 
-            bool resultado = login.Validacion("usuario", "contraseña");
+            //Manejo de inicio de sesión según validación
+            if (resultado.IsSuccessful == true)
+            {
+                MessageBox.Show("Inicio de sesión exitoso.");
+                // aqui el código para abrir la ventanda que viene después del inciiar sesion
+                Index indexForm = new Index();
+                indexForm.Show();
+                this.Close();
+            }
+            if (resultado.IsBlocked == true)
+            {
+                MessageBox.Show("La cuenta está bloqueada. Comuníquese con el soporte.");
+            }
+            if (resultado.IsSuccessful == false)
+            {
+                MessageBox.Show("Nombre de usuario o contraseña incorrectos.");                
+            }
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)

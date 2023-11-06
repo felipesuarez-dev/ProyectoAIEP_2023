@@ -4,24 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Data
 {
     public class Db
     {
         private SqlConnection connection;
-        private string connectionString;
 
-        public Db()
+        public SqlConnection ObtenerConexion()
         {
-            // COLOCAR NUESTRA CONEXION
-            connectionString = "Data Source=NombreDelServidor;Initial Catalog=JFM;User ID=Usuario;Password=Contraseña";
-            connection = new SqlConnection(connectionString);
-        }
-
-        public SqlConnection GetConnection()
-        {
+            string connectionString = ConfigurationManager.ConnectionStrings["bdAIEP"].ConnectionString;
+            SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
+
     }
 }
