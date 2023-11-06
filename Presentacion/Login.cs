@@ -27,6 +27,7 @@ namespace Presentacion
             _iniciarSesionService = new IniciarSesionService(db.ObtenerConexion());
             _registrarEventosService = new RegistrarEventosService(db.ObtenerConexion());
             _usuarioService = new UsuarioService(db.ObtenerConexion());
+            //var clave = _iniciarSesionService.Encriptar("123456");
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)

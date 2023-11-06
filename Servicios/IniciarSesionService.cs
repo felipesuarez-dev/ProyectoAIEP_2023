@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Data;
+using System.Security.Cryptography;
 
 namespace Servicios
 {
@@ -56,6 +57,8 @@ namespace Servicios
                         int idEstado = Convert.ToInt32(reader["id_estado"]);
                         bool isActive = reader.GetBoolean(reader.GetOrdinal("bol_activo"));
 
+                        var passDesencriptada = DesEncriptar(storedPassword);
+
                         result.IsSuccessful = false;
                         result.IsBlocked = false;
 
@@ -64,7 +67,7 @@ namespace Servicios
                             connection.Close();
                             result.IsBlocked = true; // guardar resultado como usuario bloqueado
                         }
-                        else if (password == storedPassword)
+                        else if (password == passDesencriptada)
                         {
                             if (connection.State == ConnectionState.Open)
                             {
@@ -102,7 +105,7 @@ namespace Servicios
                                 // Bloquear la cuenta
                                 result.IsBlocked = true;
                                 isActive = false;
-                                idEstado = 2; // Cambia el estado a "Bloqueado"
+                                idEstado = Dominio.Usuario.Bloqueado; // Cambia el estado a "Bloqueado"
                             }
 
                             //Actualizar los intentos fallidos e id_estado en la base de datos
@@ -139,6 +142,34 @@ namespace Servicios
             }
         }
 
+        //public static string EncodePassword(string originalPassword)
+        //{
+        //    SHA1 sha1 = new SHA1CryptoServiceProvider();
 
+        //    byte[] inputBytes = (new UnicodeEncoding()).GetBytes(originalPassword);
+        //    byte[] hash = sha1.ComputeHash(inputBytes);
+
+        //    return Convert.ToBase64String(hash);
+        //}
+
+        /// Encripta una cadena
+        public string Encriptar(string _cadenaAencriptar)
+        {
+            string result = string.Empty;
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+            result = Convert.ToBase64String(encryted);
+            return result;
+        }
+
+        /// Esta función desencripta la cadena que le envíamos en el parámentro de entrada.
+        public string DesEncriptar(string _cadenaAdesencriptar)
+        {
+            string result = string.Empty;
+            byte[] decryted = Convert.FromBase64String(_cadenaAdesencriptar);
+            //result = System.Text.Encoding.Unicode.GetString(decryted, 0, decryted.ToArray().Length);
+            result = System.Text.Encoding.Unicode.GetString(decryted);
+            return result;
+        }
     }
 }
+
