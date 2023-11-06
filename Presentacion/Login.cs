@@ -40,9 +40,10 @@ namespace Presentacion
                     user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
                 }
                 var mensajeExito =  "Inicio de sesión exitoso.";
-                var mensajeBloqueado = "La cuenta está bloqueada. Comuníquese con el soporte.";
+                var mensajeBloqueado = " Su cuenta fue bloqueada. Comuníquese con el soporte.";
                 var mensajeFallido = "Nombre de usuario o contraseña incorrectos. ";
-                var mjeIntentosFallido = "Número de intentos fallidos: ";
+                var mjeIntentosFallido = "\n\nNúmero de intentos fallidos: ";
+                var mjeContraseñaIncorrecta = "Contraseña Incorrecta. ";
                 var advertenciaBloqueo = "\n\nEl próximo intento fallido bloqueará la cuenta.";
 
                 //Manejo de inicio de sesión según validación
@@ -61,14 +62,13 @@ namespace Presentacion
                     txtUser.Text = "";
                     txtPass.Text = "";
                 }
-                if (resultado.IsExist == true)
+                if (resultado.IsExist == true && resultado.IsBlocked == false)
                 {
                     if (user.IntentosFallidos == 2)
                         MessageBox.Show("Inicio de sesión fallido: " + mensajeFallido + mjeIntentosFallido + user.IntentosFallidos + advertenciaBloqueo);
                     else
-                        MessageBox.Show("Inicio de sesión fallido: " + mensajeFallido + mjeIntentosFallido + user.IntentosFallidos);
-                    _registrarEventosService.RegistrarEvento(user.IdUsuario, "Inicio de sesión fallido: " + mensajeFallido);
-                    txtUser.Text = "";
+                        MessageBox.Show("Inicio de sesión fallido: " + mjeContraseñaIncorrecta + mjeIntentosFallido + user.IntentosFallidos);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + mjeContraseñaIncorrecta);
                     txtPass.Text = "";
                 }
                 if (resultado.IsSuccessful == false && resultado.IsBlocked == false && resultado.IsExist == false)
