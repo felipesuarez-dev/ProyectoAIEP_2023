@@ -58,10 +58,10 @@ namespace Servicios
                         result.IsSuccessful = false;
                         result.IsBlocked = false;
 
-                        if (idEstado == 2) // 2 es el estado para "Bloqueado"
+                        if (idEstado == Dominio.Usuario.Bloqueado)
                         {
                             connection.Close();
-                            result.IsBlocked = true; // Usuario bloqueado
+                            result.IsBlocked = true; // guardar resultado como usuario bloqueado
                         }
                         else if (password == storedPassword)
                         {
@@ -85,7 +85,7 @@ namespace Servicios
                             }
 
                             connection.Close();
-                            result.IsSuccessful = true;
+                            result.IsSuccessful = true; //guardar resultado como usuario validado
                         }
                         else
                         {
@@ -104,7 +104,7 @@ namespace Servicios
                                 idEstado = 2; // Cambia el estado a "Bloqueado"
                             }
 
-                            //Actualizar los intentos fallidos e IdEstado en la base de datos
+                            //Actualizar los intentos fallidos e id_estado en la base de datos
                             using (SqlCommand actualizarComando = new SqlCommand(updateQuery, connection))
                             {
                                 if (connection.State != ConnectionState.Open)

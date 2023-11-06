@@ -8,6 +8,9 @@ namespace Dominio
 {
     public class Usuario
     {
+        public const int Activo = 1;
+        public const int Bloqueado= 2;
+
         public int IdUsuario { get; set; }
         public string Rut { get; set; }
         public string Username { get; set; }
@@ -22,6 +25,6 @@ namespace Dominio
         public int IdEstado { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
-        public bool Activo { get; set; }
+        public bool bolActivo { get; set; }
     }
 }

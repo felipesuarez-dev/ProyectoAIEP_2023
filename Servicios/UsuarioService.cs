@@ -53,7 +53,7 @@ namespace Servicios
                         IdEstado = Convert.ToInt32(reader["id_estado"]),
                         FechaCreacion = reader["fecha_creacion"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["fecha_creacion"]),
                         FechaModificacion = reader["fecha_modificacion"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["fecha_modificacion"]),
-                        Activo = Convert.ToBoolean(reader["bol_activo"])
+                        bolActivo = Convert.ToBoolean(reader["bol_activo"])
                     };
                 }
 
