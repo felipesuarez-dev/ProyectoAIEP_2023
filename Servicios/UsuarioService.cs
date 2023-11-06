@@ -18,7 +18,7 @@ namespace Servicios
             this.connection = connection;
         }
 
-        public Usuario ObtenerDatosUsuario(string username)
+        public Usuario ObtenerDatosUsuarioPorUsername(string username)
         {
             Usuario usuario = null;
 

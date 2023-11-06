@@ -36,7 +36,7 @@ namespace Presentacion
                 var mensajeExito = "Inicio de sesión exitoso.";
                 var mensajeBloqueado = "La cuenta está bloqueada. Comuníquese con el soporte.";
                 var mensajeFallido = "Nombre de usuario o contraseña incorrectos.";
-                var user = _usuarioService.ObtenerDatosUsuario(txtUser.Text); //Obtenemos todos los datos del usuario en BD
+                var user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
 
                 //Manejo de inicio de sesión según validación
                 if (resultado.IsSuccessful == true)
