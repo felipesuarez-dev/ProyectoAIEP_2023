@@ -25,7 +25,14 @@ namespace Servicios
             string insertQuery = "INSERT INTO RegistroEventos (id_usuario, evento, fecha_evento) VALUES (@id_usuario, @evento, @fecha_evento)";
             using (SqlCommand comando = new SqlCommand(insertQuery, connection))
             {
-                comando.Parameters.AddWithValue("@id_usuario",  idUsuario);
+                if (idUsuario.HasValue)
+                {
+                    comando.Parameters.AddWithValue("@id_usuario", idUsuario);
+                }
+                else
+                {
+                    comando.Parameters.AddWithValue("@id_usuario", DBNull.Value);
+                }
                 comando.Parameters.AddWithValue("@evento", evento);
                 comando.Parameters.AddWithValue("@fecha_evento", DateTime.Now);
 
@@ -33,7 +40,6 @@ namespace Servicios
                 {
                     connection.Open();
                 }
-
                 comando.ExecuteNonQuery();
                 connection.Close();
             }

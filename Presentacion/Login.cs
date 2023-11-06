@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Data;
+using Dominio;
 using Servicios;
 
 namespace Presentacion
@@ -31,18 +32,24 @@ namespace Presentacion
         private void btnIniciar_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
+                Usuario user = null;
                 var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text);
-                var mensajeExito = "Inicio de sesión exitoso.";
+                if (resultado.IsSuccessful || resultado.IsBlocked || resultado.IsExist)
+                {
+                    user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
+                }
+                var mensajeExito =  "Inicio de sesión exitoso.";
                 var mensajeBloqueado = "La cuenta está bloqueada. Comuníquese con el soporte.";
-                var mensajeFallido = "Nombre de usuario o contraseña incorrectos.";
-                var user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
+                var mensajeFallido = "Nombre de usuario o contraseña incorrectos. ";
+                var mjeIntentosFallido = "Número de intentos fallidos: ";
+                var advertenciaBloqueo = "\n\nEl próximo intento fallido bloqueará la cuenta.";
 
                 //Manejo de inicio de sesión según validación
                 if (resultado.IsSuccessful == true)
                 {                   
                     MessageBox.Show(mensajeExito);
-                    _registrarEventosService.RegistrarEvento(user.IdUsuario, mensajeExito);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + mensajeExito);
                     Index indexForm = new Index(); //abrir siguiente ventana
                     indexForm.Show();
                     this.Hide();
@@ -50,11 +57,21 @@ namespace Presentacion
                 if (resultado.IsBlocked == true)
                 {
                     MessageBox.Show(mensajeBloqueado);
-                    _registrarEventosService.RegistrarEvento(user.IdUsuario, "Inicio de sesión fallido:"+mensajeBloqueado);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + "Inicio de sesión fallido." + mensajeBloqueado);
                     txtUser.Text = "";
                     txtPass.Text = "";
                 }
-                if (resultado.IsSuccessful == false && resultado.IsBlocked == false)
+                if (resultado.IsExist == true)
+                {
+                    if (user.IntentosFallidos == 2)
+                        MessageBox.Show("Inicio de sesión fallido: " + mensajeFallido + mjeIntentosFallido + user.IntentosFallidos + advertenciaBloqueo);
+                    else
+                        MessageBox.Show("Inicio de sesión fallido: " + mensajeFallido + mjeIntentosFallido + user.IntentosFallidos);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, "Inicio de sesión fallido: " + mensajeFallido);
+                    txtUser.Text = "";
+                    txtPass.Text = "";
+                }
+                if (resultado.IsSuccessful == false && resultado.IsBlocked == false && resultado.IsExist == false)
                 {
                     _registrarEventosService.RegistrarEvento(null, "Inicio de sesión fallido:"+mensajeFallido);
                     MessageBox.Show(mensajeFallido);

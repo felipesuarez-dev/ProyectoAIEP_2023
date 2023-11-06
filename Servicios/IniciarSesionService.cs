@@ -24,6 +24,7 @@ namespace Servicios
         {
             public bool IsSuccessful { get; set; }
             public bool IsBlocked { get; set; }
+            public bool IsExist { get; set; }
         }
 
         public ValidationResult Validacion(string username, string password)
@@ -118,6 +119,7 @@ namespace Servicios
                                 actualizarComando.ExecuteNonQuery();
                             }
 
+                            result.IsExist = true;
                             connection.Close();
                         }
                     }
