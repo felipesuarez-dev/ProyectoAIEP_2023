@@ -35,11 +35,13 @@ namespace Presentacion
             try
             {
                 Usuario user = null;
-                var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text);
+                var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text); //método para validar al usuario ingresado
                 if (resultado.IsSuccessful || resultado.IsBlocked || resultado.IsExist)
                 {
                     user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD
                 }
+
+                //mensajes
                 var mensajeExito =  "Inicio de sesión exitoso.";
                 var mensajeBloqueado = " Su cuenta fue bloqueada. Comuníquese con el soporte.";
                 var mensajeFallido = "Nombre de usuario o contraseña incorrectos. ";
@@ -47,8 +49,8 @@ namespace Presentacion
                 var mjeContraseñaIncorrecta = "Contraseña Incorrecta. ";
                 var advertenciaBloqueo = "\n\nEl próximo intento fallido bloqueará la cuenta.";
 
-                //Manejo de inicio de sesión según validación
-                if (resultado.IsSuccessful == true)
+                //Manejo de inicio de sesión según resultado de la validación
+                if (resultado.IsSuccessful)
                 {                   
                     MessageBox.Show(mensajeExito);
                     _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + mensajeExito);
@@ -56,7 +58,7 @@ namespace Presentacion
                     indexForm.Show();
                     this.Hide();
                 }
-                if (resultado.IsBlocked == true)
+                if (resultado.IsBlocked)
                 {
                     MessageBox.Show(mensajeBloqueado);
                     _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + "Inicio de sesión fallido." + mensajeBloqueado);
@@ -72,7 +74,7 @@ namespace Presentacion
                     _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + mjeContraseñaIncorrecta);
                     txtPass.Text = "";
                 }
-                if (resultado.IsSuccessful == false && resultado.IsBlocked == false && resultado.IsExist == false)
+                if (!resultado.IsSuccessful && !resultado.IsBlocked  && !resultado.IsExist)
                 {
                     _registrarEventosService.RegistrarEvento(null, "Inicio de sesión fallido:"+mensajeFallido);
                     MessageBox.Show(mensajeFallido);
