@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using Data;
 
-namespace Dominio
+namespace Servicios
 {
-    public class IniciarSesion
+    public class IniciarSesionService
     {
         private SqlConnection connection;
+        private readonly RegistrarEventosService _registrarEventosService;
 
-        public IniciarSesion(SqlConnection connection)
+        public IniciarSesionService(SqlConnection connection)
         {
             this.connection = connection;
+            _registrarEventosService = new RegistrarEventosService(connection);
         }
 
         public class ValidationResult
@@ -129,7 +132,8 @@ namespace Dominio
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al validar la sesión", ex);
+                _registrarEventosService.RegistrarEvento(null, "Error al iniciar sesión", ex);
+                throw;
             }
         }
 

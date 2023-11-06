@@ -8,46 +8,64 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Data;
-using Dominio;
+using Servicios;
 
 namespace Presentacion
 {
     public partial class Login : Form
     {
         private readonly Db db;
-        private readonly IniciarSesion login;
+        private readonly IniciarSesionService _iniciarSesionService;
+        private readonly RegistrarEventosService _registrarEventosService;
+        private readonly UsuarioService _usuarioService;
 
         public Login()
         {
             InitializeComponent();
             db = new Db();
-            login = new IniciarSesion(db.ObtenerConexion());
+            _iniciarSesionService = new IniciarSesionService(db.ObtenerConexion());
+            _registrarEventosService = new RegistrarEventosService(db.ObtenerConexion());
+            _usuarioService = new UsuarioService(db.ObtenerConexion());
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
-            var resultado = login.Validacion(txtUser.Text, txtPass.Text);
+            try
+            {                
+                var resultado = _iniciarSesionService.Validacion(txtUser.Text, txtPass.Text);
+                var mensajeExito = "Inicio de sesión exitoso.";
+                var mensajeBloqueado = "La cuenta está bloqueada. Comuníquese con el soporte.";
+                var mensajeFallido = "Nombre de usuario o contraseña incorrectos.";
+                var user = _usuarioService.ObtenerDatosUsuario(txtUser.Text); //Obtenemos todos los datos del usuario en BD
 
-            //Manejo de inicio de sesión según validación
-            if (resultado.IsSuccessful == true)
-            {
-                MessageBox.Show("Inicio de sesión exitoso.");
-                // TODO: arreglar abrir siguiente ventana
-                Index indexForm = new Index();
-                indexForm.Show();
-                this.Close();
+                //Manejo de inicio de sesión según validación
+                if (resultado.IsSuccessful == true)
+                {                   
+                    MessageBox.Show(mensajeExito);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, mensajeExito);
+                    Index indexForm = new Index(); //abrir siguiente ventana
+                    indexForm.Show();
+                    this.Hide();
+                }
+                if (resultado.IsBlocked == true)
+                {
+                    MessageBox.Show(mensajeBloqueado);
+                    _registrarEventosService.RegistrarEvento(user.IdUsuario, "Inicio de sesión fallido:"+mensajeBloqueado);
+                    txtUser.Text = "";
+                    txtPass.Text = "";
+                }
+                if (resultado.IsSuccessful == false && resultado.IsBlocked == false)
+                {
+                    _registrarEventosService.RegistrarEvento(null, "Inicio de sesión fallido:"+mensajeFallido);
+                    MessageBox.Show(mensajeFallido);
+                    txtUser.Text = "";
+                    txtPass.Text = "";
+                }
             }
-            if (resultado.IsBlocked == true)
+            catch (Exception ex)
             {
-                MessageBox.Show("La cuenta está bloqueada. Comuníquese con el soporte.");
-                txtUser.Text = "";
-                txtPass.Text = "";
-            }
-            if (resultado.IsSuccessful == false && resultado.IsBlocked == false)
-            {
-                MessageBox.Show("Nombre de usuario o contraseña incorrectos.");
-                txtUser.Text = "";
-                txtPass.Text = "";
+                _registrarEventosService.RegistrarEvento(null, "Error al iniciar sesión", ex);
+                throw;
             }
         }
 
