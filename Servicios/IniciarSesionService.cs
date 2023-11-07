@@ -102,7 +102,7 @@ namespace Servicios
                             intentosFallidos++;
 
                             // Verificar si se superó el límite de intentos fallidos
-                            if (intentosFallidos >= 3)
+                            if (intentosFallidos > 2)
                             {
                                 // Bloquear la cuenta
                                 result.IsBlocked = true;
