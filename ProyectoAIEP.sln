@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5 - Presentacion", "Present
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3 - Dominio", "Dominio\3 - Dominio.csproj", "{5FE5B032-F15E-4FC5-8089-D1FA6EF38071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1 - Data", "Data\1 - Data.csproj", "{CF823B9B-CAEF-48C4-8DD5-7DE724543528}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2 - Data", "Data\2 - Data.csproj", "{CF823B9B-CAEF-48C4-8DD5-7DE724543528}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 - Servicios", "Servicios\4 - Servicios.csproj", "{9849D56F-5675-45E9-AB4D-6AEF5BD6E460}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "2 - DataBase", "DataBase\2 - DataBase.sqlproj", "{7F837239-C628-414D-B78E-D08048C35315}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "1 - BaseDatos", "DataBase\1 - BaseDatos.sqlproj", "{7F837239-C628-414D-B78E-D08048C35315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
