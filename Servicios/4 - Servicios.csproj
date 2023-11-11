@@ -48,13 +48,13 @@
     <Compile Include="UsuarioService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
+    <ProjectReference Include="..\Data\1 - Data.csproj">
       <Project>{cf823b9b-caef-48c4-8dd5-7de724543528}</Project>
-      <Name>Data</Name>
+      <Name>1 - Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dominio\Dominio.csproj">
+    <ProjectReference Include="..\Dominio\3 - Dominio.csproj">
       <Project>{5fe5b032-f15e-4fc5-8089-d1fa6ef38071}</Project>
-      <Name>Dominio</Name>
+      <Name>3 - Dominio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
