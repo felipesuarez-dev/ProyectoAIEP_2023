@@ -49,12 +49,14 @@ namespace Presentacion
                     user = _usuarioService.ObtenerDatosUsuarioPorUsername(txtUser.Text); //Obtenemos todos los datos del usuario en BD si alguno de los resultados es true
                 }
 
+                var usuarioId = user.IdUsuario;
+
                 //Manejo de inicio de sesión según resultado de la validación
                 if (resultado.IsSuccessful)
                 {                   
                     MessageBox.Show(mensajeExito);
                     _registrarEventosService.RegistrarEvento(user.IdUsuario, user.Nombre + " " + user.Apellido + ": " + mensajeExito);
-                    Index indexForm = new Index(); //abrir siguiente ventana
+                    Index indexForm = new Index(usuarioId); //abrir siguiente ventana
                     indexForm.Show();
                     this.Hide();
                 }

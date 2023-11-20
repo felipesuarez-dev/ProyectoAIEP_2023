@@ -30,6 +30,8 @@ namespace Presentacion
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
+            this.txtUserName = new System.Windows.Forms.Label();
+            this.txtUserId = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -41,14 +43,35 @@ namespace Presentacion
             this.label1.TabIndex = 0;
             this.label1.Text = "INDEX";
             // 
+            // txtUserName
+            // 
+            this.txtUserName.AutoSize = true;
+            this.txtUserName.Location = new System.Drawing.Point(676, 29);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(18, 13);
+            this.txtUserName.TabIndex = 1;
+            this.txtUserName.Text = "@";
+            // 
+            // txtUserId
+            // 
+            this.txtUserId.AutoSize = true;
+            this.txtUserId.Location = new System.Drawing.Point(676, 52);
+            this.txtUserId.Name = "txtUserId";
+            this.txtUserId.Size = new System.Drawing.Size(16, 13);
+            this.txtUserId.TabIndex = 2;
+            this.txtUserId.Text = "Id";
+            // 
             // Index
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtUserId);
+            this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label1);
             this.Name = "Index";
             this.Text = "Inicio";
+            this.Load += new System.EventHandler(this.Index_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -57,5 +80,7 @@ namespace Presentacion
         #endregion
 
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtUserName;
+        private System.Windows.Forms.Label txtUserId;
     }
 }

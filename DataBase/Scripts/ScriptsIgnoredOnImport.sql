@@ -164,3 +164,55 @@ GO
 
 ALTER DATABASE [JFM] SET  READ_WRITE
 GO
+
+USE [JFM]
+GO
+
+/****** Object:  Table [dbo].[AsignacionMenu]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Estados]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Menu]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[RegistroEventos]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Roles]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[TipoMenu]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 19-11-2023 22:33:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO

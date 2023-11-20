@@ -47,24 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Index.cs">
+    <Compile Include="Helpers\SmartControl.cs" />
+    <Compile Include="Vistas\Home\Index.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Index.Designer.cs">
+    <Compile Include="Vistas\Home\Index.Designer.cs">
       <DependentUpon>Index.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs">
+    <Compile Include="Vistas\Login\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
+    <Compile Include="Vistas\Login\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Index.resx">
+    <EmbeddedResource Include="Vistas\Home\Index.resx">
       <DependentUpon>Index.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="Vistas\Login\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

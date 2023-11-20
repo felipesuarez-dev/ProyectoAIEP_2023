@@ -61,12 +61,13 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\AsignacionPermisos.sql" />
     <Build Include="dbo\Tables\Estados.sql" />
-    <Build Include="dbo\Tables\Permisos.sql" />
     <Build Include="dbo\Tables\RegistroEventos.sql" />
     <Build Include="dbo\Tables\Roles.sql" />
     <Build Include="dbo\Tables\Usuarios.sql" />
     <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
+    <Build Include="dbo\Tables\AsignacionMenu.sql" />
+    <Build Include="dbo\Tables\Menu.sql" />
+    <Build Include="dbo\Tables\TipoMenu.sql" />
   </ItemGroup>
 </Project>

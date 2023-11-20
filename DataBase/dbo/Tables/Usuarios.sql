@@ -21,3 +21,11 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Usuarios] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
+GO
+ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD FOREIGN KEY([id_estado])
+REFERENCES [dbo].[Estados] ([id_estado])
+GO
+ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD FOREIGN KEY([id_rol])
+REFERENCES [dbo].[Roles] ([id_rol])
+GO
+ALTER TABLE [dbo].[Usuarios] ADD  DEFAULT (getdate()) FOR [fecha_creacion]

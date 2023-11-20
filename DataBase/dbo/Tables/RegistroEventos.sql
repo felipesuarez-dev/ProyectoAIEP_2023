@@ -15,3 +15,8 @@ ALTER TABLE [dbo].[RegistroEventos]  WITH CHECK ADD FOREIGN KEY([id_usuario])
 REFERENCES [dbo].[Usuarios] ([id_usuario])
 GO
 ALTER TABLE [dbo].[RegistroEventos] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
+GO
+ALTER TABLE [dbo].[RegistroEventos]  WITH CHECK ADD FOREIGN KEY([id_usuario])
+REFERENCES [dbo].[Usuarios] ([id_usuario])
+GO
+ALTER TABLE [dbo].[RegistroEventos] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
