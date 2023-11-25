@@ -43,7 +43,7 @@ namespace Presentacion
         {
             var userId = txtUserId.Text;
             DibujarMenu();
-            
+
         }
 
         private void DibujarMenu()
@@ -67,7 +67,7 @@ namespace Presentacion
                 string tituloMenu = dtMenu.Rows[i]["nombre_menu"].ToString();
 
                 menuItem = new ToolStripMenuItem(tituloMenu);
-                menuItem.Tag = "Codigo" + idMenu.ToString();
+                //menuItem.Tag = "Codigo" + idMenu.ToString();
 
                 DataTable dtSubMenu = new DataTable();
                 dtSubMenu = _menuService.ConsultarSubmenu(IdUsuario, idMenu);
@@ -78,7 +78,7 @@ namespace Presentacion
 
                     subMenuItem = new ToolStripMenuItem(tituloSubMenu);
                     subMenuItem.Click += subMenu_Click;
-                    subMenuItem.Tag = "Codigo" + idMenu.ToString() + "-" + idSubMenu.ToString();
+                    subMenuItem.Tag = dtSubMenu.Rows[j]["libreria"].ToString() + "-" + dtSubMenu.Rows[j]["componentes"].ToString();
                     menuItem.DropDownItems.Add(subMenuItem);
                 }
 
@@ -93,22 +93,25 @@ namespace Presentacion
             //MessageBox.Show("Codigo subMenu es:" + subMenu.Tag);
 
             Control ctrGUI;
-            ctrGUI = SmartControl.LoadSmartControl("supermercado", "supermercado.Cliente");
-            ctrGUI.SuspendLayout();
-            ctrGUI.Text = "cliente";
-            // ctrGUI.Size = new Size(tabContenedor.Size.Width, tabContenedor.Size.Height);
+            string[] parametros = subMenu.Tag.ToString().Split('-');
+
+            string libreria = parametros[0];
+            string componente = parametros[1];
+
+            ctrGUI = SmartControl.LoadSmartControl(libreria, componente);
+            //ctrGUI.SuspendLayout();
             ctrGUI.BackColor = Color.White;
-            ctrGUI.ResumeLayout();
+            //ctrGUI.ResumeLayout();
 
             Form f1 = new Form();
             f1 = ctrGUI as Form;
-            f1.MdiParent = this; //this refers to MainForm (parent)
+            f1.MdiParent = this;
             f1.Show();
 
             //var hw = radDockPrincipal.DockControl(ctrGUI, PosicionVentana, TipoVentana);
             //hw.CloseAction = Telerik.WinControls.UI.Docking.DockWindowCloseAction.CloseAndDispose;
-            this.ResumeLayout();
-            this.Cursor = Cursors.Default;
+            //this.ResumeLayout();
+            //this.Cursor = Cursors.Default;
 
         }
 
