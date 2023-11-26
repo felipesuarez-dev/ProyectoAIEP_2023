@@ -13,3 +13,5 @@ GO
 ALTER TABLE [dbo].[Roles] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
 GO
 ALTER TABLE [dbo].[Roles] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
+GO
+ALTER TABLE [dbo].[Roles] ADD  DEFAULT (getdate()) FOR [fecha_creacion]

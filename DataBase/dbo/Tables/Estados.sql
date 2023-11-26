@@ -13,3 +13,5 @@ GO
 ALTER TABLE [dbo].[Estados] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
 GO
 ALTER TABLE [dbo].[Estados] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
+GO
+ALTER TABLE [dbo].[Estados] ADD  DEFAULT (getdate()) FOR [fecha_creacion]

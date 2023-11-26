@@ -13,3 +13,7 @@ GO
 ALTER TABLE [dbo].[TipoMenu] ADD  DEFAULT (getdate()) FOR [fec_registro]
 GO
 ALTER TABLE [dbo].[TipoMenu] ADD  DEFAULT (getdate()) FOR [fec_modificacion]
+GO
+ALTER TABLE [dbo].[TipoMenu] ADD  DEFAULT (getdate()) FOR [fec_registro]
+GO
+ALTER TABLE [dbo].[TipoMenu] ADD  DEFAULT (getdate()) FOR [fec_modificacion]

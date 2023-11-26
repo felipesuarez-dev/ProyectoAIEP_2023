@@ -16,3 +16,9 @@ REFERENCES [dbo].[Menu] ([id_menu])
 GO
 ALTER TABLE [dbo].[AsignacionMenu]  WITH CHECK ADD FOREIGN KEY([id_rol])
 REFERENCES [dbo].[Roles] ([id_rol])
+GO
+ALTER TABLE [dbo].[AsignacionMenu]  WITH CHECK ADD FOREIGN KEY([id_menu])
+REFERENCES [dbo].[Menu] ([id_menu])
+GO
+ALTER TABLE [dbo].[AsignacionMenu]  WITH CHECK ADD FOREIGN KEY([id_rol])
+REFERENCES [dbo].[Roles] ([id_rol])

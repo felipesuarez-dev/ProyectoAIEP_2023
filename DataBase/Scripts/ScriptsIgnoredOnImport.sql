@@ -216,3 +216,55 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
+USE [JFM]
+GO
+
+/****** Object:  Table [dbo].[AsignacionMenu]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Estados]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Menu]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[RegistroEventos]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Roles]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[TipoMenu]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 26-11-2023 16:23:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
