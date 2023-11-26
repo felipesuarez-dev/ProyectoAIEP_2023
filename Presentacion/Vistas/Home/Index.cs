@@ -35,13 +35,17 @@ namespace Presentacion
             //Capturar datos del usuario
             Usuario user = new Usuario();
             user = _usuarioService.ObtenerDatosUsuarioPorID(usuarioId);
-            txtUserName.Text = user.Nombre;
+            txtUserName.Text = user.Nombre+" "+user.Apellido;
+            txtUserId.Text = user.IdUsuario.ToString();
             txtUserId.Visible = false;
+            this.IsMdiContainer = true;
+            //this.BackColor = Color.White;
         }
 
         private void Index_Load(object sender, EventArgs e)
         {
-            var userId = txtUserId.Text;
+
+            //var userId = txtUserId.Text;
             DibujarMenu();
 
         }
@@ -78,7 +82,7 @@ namespace Presentacion
 
                     subMenuItem = new ToolStripMenuItem(tituloSubMenu);
                     subMenuItem.Click += subMenu_Click;
-                    subMenuItem.Tag = dtSubMenu.Rows[j]["libreria"].ToString() + "-" + dtSubMenu.Rows[j]["componentes"].ToString();
+                    subMenuItem.Tag = dtSubMenu.Rows[j]["libreria"].ToString() + "-" + dtSubMenu.Rows[j]["componente"].ToString();
                     menuItem.DropDownItems.Add(subMenuItem);
                 }
 
@@ -99,9 +103,10 @@ namespace Presentacion
             string componente = parametros[1];
 
             ctrGUI = SmartControl.LoadSmartControl(libreria, componente);
-            //ctrGUI.SuspendLayout();
+            ctrGUI.SuspendLayout();
+
             ctrGUI.BackColor = Color.White;
-            //ctrGUI.ResumeLayout();
+            ctrGUI.ResumeLayout();
 
             Form f1 = new Form();
             f1 = ctrGUI as Form;
@@ -110,8 +115,8 @@ namespace Presentacion
 
             //var hw = radDockPrincipal.DockControl(ctrGUI, PosicionVentana, TipoVentana);
             //hw.CloseAction = Telerik.WinControls.UI.Docking.DockWindowCloseAction.CloseAndDispose;
-            //this.ResumeLayout();
-            //this.Cursor = Cursors.Default;
+            this.ResumeLayout();
+            this.Cursor = Cursors.Default;
 
         }
 

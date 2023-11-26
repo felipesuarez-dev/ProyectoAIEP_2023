@@ -49,7 +49,7 @@ namespace Servicios
             comando.CommandText = "ConsultarSubMenuUsuario";
             comando.CommandType = CommandType.StoredProcedure;
             comando.Parameters.AddWithValue("@id_usuario", IdUsuario);
-            comando.Parameters.AddWithValue("@id_menu", menuPrincipal);
+            comando.Parameters.AddWithValue("@id_menu_principal", menuPrincipal);
             leer = comando.ExecuteReader();
             tabla.Load(leer);
             connection.Close();
